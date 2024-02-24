@@ -69,6 +69,13 @@ h6 {
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
+.login-bg{
+  background-image: url("../img/hotel-image-bg.png");
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  /*background-position: center center;*/
+  /*background-;*/
+}
 .back-to-top {
   position: fixed;
   visibility: hidden;
@@ -1257,4 +1264,17 @@ h6 {
   text-align: center;
   font-size: 13px;
   color: #012970;
+}
+
+.credits a{
+  font-weight: bold;
+  color: #ed3c0d;
+}
+
+.btn-color{
+  background-color: #ee5057;
+}
+
+.btn-color:hover{
+  background-color: #ed3c0d;
 }
