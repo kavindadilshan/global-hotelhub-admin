@@ -166,7 +166,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Top Trending Vehicles</h5>
+                        <h5 class="card-title">Top Trending Hotel Locations</h5>
 
                         <!-- Table with hoverable rows -->
                         <table class="table table-hover">
@@ -223,8 +223,8 @@
 
     $(document).ready(function () {
 
-        let token=Cookies.get('token');
-        let userId=Cookies.get('id');
+        let token = Cookies.get('token');
+        let userId = Cookies.get('id');
 
         window.swal({
             title: "Loading...",
@@ -250,29 +250,35 @@
             swal.close();
 
             if (response.success === true) {
+                var uniqueLocations = []; // Array to store unique locations
+                var uniqueIndices = {}; // Object to store indices of unique locations
 
                 for (let i = 0; i < response.body.length; i++) {
+                    var location = response.body[i].location;
 
+                    // Check if location is already in the array
+                    if (uniqueLocations.indexOf(location) === -1) {
+                        uniqueLocations.push(location); // Add location to the array
+                        uniqueIndices[location] = i; // Store the index of the first occurrence of this location
+                    }
+                }
 
-                    var x ="<tr>\n" +
-                        "                    <th scope=\"row\">"+response.body[i].location+"</th>\n" +
-                        "                    <td>"+new Date(response.body[i].checkin).toISOString().split('T')[0]+"</td>\n" +
-                        "                    <td>"+new Date(response.body[i].checkout).toISOString().split('T')[0]+"</td>\n" +
-                        "                    <td>"+(response.body[i].rooms !== null ? response.body[i].rooms : 1)+"</td>\n" +
-                        "                    <td>"+response.body[i].count+"</td>\n" +
+                for (let i = 0; i < uniqueLocations.length; i++) {
+                    var index = uniqueIndices[uniqueLocations[i]];
+                    var x = "<tr>\n" +
+                        "                    <th scope=\"row\">" + response.body[index].location + "</th>\n" +
+                        "  <td>" + (response.body[index].checkin ? new Date(response.body[index].checkin).toISOString().split('T')[0] : 'N/A') + "</td>\n" +
+                        "  <td>" + (response.body[index].checkout ? new Date(response.body[index].checkout).toISOString().split('T')[0] : 'N/A') + "</td>\n" +
+                        "                    <td>" + (response.body[index].rooms !== null ? response.body[index].rooms : 1) + "</td>\n" +
+                        "                    <td>" + response.body[index].count + "</td>\n" +
                         "                  </tr>"
 
-
                     $('#tbody').append(x);
-
                 }
             }
-
-
         });
-
-
     });
+
 
     // .......................................................................................
     /**
